@@ -10,10 +10,10 @@ int dfOSX = 0;
 int dfOSY = 0;
 bool inverted = false;
 
-MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY)
+MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
 {
-  _lenX = lengthX;
-  _lenY = lengthY;
+  _lenX = MAX_DEVICES * 8;
+  _lenY = 8;
   
   mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
   // Initialize the object:
