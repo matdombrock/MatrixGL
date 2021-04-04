@@ -2,6 +2,8 @@ An Arduino Microcontroller Library For LED Dot Matrix Displays
 
 Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 
+Line drawing is preformed by a custom [digital differential analyzer (DDA)](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) implementation. 
+
 ## Setup
 
 ```c++
