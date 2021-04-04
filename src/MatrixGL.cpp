@@ -10,7 +10,7 @@ int dfOSX = 0;
 int dfOSY = 0;
 bool inverted = false;
 
-MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int intensity)
+MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY)
 {
   _lenX = lengthX;
   _lenY = lengthY;
@@ -19,7 +19,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int in
   // Initialize the object:
   mx->begin();
   // Set the intensity (brightness) of the display (0-15):
-  setIntensity(intensity);
+  setIntensity(0);
   // Clear the display:
   mx->clear();
   _fDelay = 50;
