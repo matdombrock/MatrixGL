@@ -16,6 +16,7 @@ class MatrixGL
     void drawFrame(bool frame[], bool clearFirst);
     void drawLine(int x1, int y1, int x2, int y2);
     void drawPath(int points[], int pointsLen);
+    void setIntensity(int intensity);
     void clear();
     void delayF();
     void unlock();

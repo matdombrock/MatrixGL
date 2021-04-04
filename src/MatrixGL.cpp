@@ -19,10 +19,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int in
   // Intialize the object:
   mx->begin();
   // Set the intensity (brightness) of the display (0-15):
-  if(intensity>15){
-    intensity = 15;
-  }
-  mx->control(MD_MAX72XX::INTENSITY, intensity);
+  setIntensity(intensity);
   // Clear the display:
   mx->clear();
   _fr = 50;
@@ -98,6 +95,13 @@ void MatrixGL::drawPath(int points[], int pointsLen){
       drawLine(points[i], points[i+1], points[i+2], points[i+3]);
     }
   }
+}
+
+void MatrixGL::setIntensity(int intensity){
+  if(intensity>15){
+    intensity = 15;
+  }
+  mx->control(MD_MAX72XX::INTENSITY, intensity);
 }
 
 void MatrixGL::delayF(){
