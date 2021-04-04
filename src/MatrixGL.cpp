@@ -115,3 +115,10 @@ void MatrixGL::unlock(){
 void MatrixGL::lock(){
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
 }
+
+int MatrixGL::lenX(){
+  return _lenX;
+}
+int MatrixGL::lenY(){
+  return _lenY;
+}

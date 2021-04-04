@@ -20,6 +20,8 @@ class MatrixGL
     void delayF();
     void unlock();
     void lock();
+    int lenX();
+    int lenY();
     MD_MAX72XX* mx;
   private:
     int _fr;
