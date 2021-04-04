@@ -16,7 +16,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int in
   _lenY = lengthY;
   
   mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
-  // Intialize the object:
+  // Initialize the object:
   mx->begin();
   // Set the intensity (brightness) of the display (0-15):
   setIntensity(intensity);
