@@ -1,4 +1,4 @@
-An Arduino Microcontroller Library For LED Dot Matrix Displays
+An Arduino Microcontroller Graphics Library For LED Dot Matrix Displays
 
 Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 
