@@ -17,6 +17,7 @@ class MatrixGL
     void drawLine(int x1, int y1, int x2, int y2);
     void drawPath(int points[], int pointsLen);
     void setIntensity(int intensity);
+    void setFrameRate(int fr);
     void clear();
     void delayF();
     void unlock();
@@ -25,7 +26,7 @@ class MatrixGL
     int lenY();
     MD_MAX72XX* mx;
   private:
-    int _fr;
+    int _fDelay;
     int _lenX;
     int _lenY;
 };

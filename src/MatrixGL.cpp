@@ -22,7 +22,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int in
   setIntensity(intensity);
   // Clear the display:
   mx->clear();
-  _fr = 50;
+  _fDelay = 50;
 }
 // Move over functions
 void MatrixGL::drawFrame(bool frame[], bool clearFirst){
@@ -103,8 +103,12 @@ void MatrixGL::setIntensity(int intensity){
   mx->control(MD_MAX72XX::INTENSITY, intensity);
 }
 
+void MatrixGL::setFrameRate(int fr){
+  _fDelay = 1000/fr;
+}
+
 void MatrixGL::delayF(){
-  delay(_fr);
+  delay(_fDelay);
 }
 
 void MatrixGL::clear(){
