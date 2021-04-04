@@ -13,6 +13,7 @@ Planned:
 * Display Inversion
 * Scrolling & Draw Offsets
 * Text Support(?)
+* Matrix State Queries
 
 Line drawing is preformed by a custom [digital differential analyzer (DDA)](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) implementation. 
 
