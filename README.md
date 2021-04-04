@@ -158,6 +158,24 @@ void lock();
 
 When preforming a long series of draw operations you might wish to lock the display so that the updates are written to the display buffer but not displayed on the device. 
 
+To use this method effectively you need to lock the display, then clear it, write to the display, then unlock it. 
+
+Consider this example:
+```c++
+void randomNoise(){
+  int X = matrix.lenX();
+  int Y = matrix.lenY();
+  matrix.lock();
+  matrix.clear();
+  for(int i = 0; i<(X*Y); i++){
+    matrix.mx->setPoint(random(Y), random(X), true); 
+  }
+  matrix.unlock();
+  matrix.delayF();
+}
+```
+Without using the `lock()` method, you will probably have issues with the display flickering. 
+
 ## Unlock Display
 ```c++
 void unlock();
