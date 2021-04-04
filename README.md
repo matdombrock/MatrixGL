@@ -2,6 +2,8 @@ An Arduino Microcontroller Graphics Library For LED Dot Matrix Displays
 
 Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 
+*Note: The `MD_MAX_72XX` library treats additional 8x8 matrices as adding to the Y axis. This library prefers treating them as the X axis. So the axes are inverted relative to the `MD_MAX_72XX` library.*
+
 ## Features
 Implemented:
 * Frame Based Animation
@@ -46,6 +48,14 @@ void loop(){
   matrix.unlock();// Unlock the display (not required)
 }
 ```
+
+## Draw Point
+```c++
+void drawPoint(int x, int y);
+```
+Turn on an LED at point x,y. 
+
+*Note: Unlike many graphics libraries, this uses does not start counting the Y axis from the top. So point 0,0 is the bottom left corner (as you would expect on a graphing calculator).*
 
 ## Draw Line
 ```c++

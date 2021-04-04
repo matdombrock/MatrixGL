@@ -97,6 +97,10 @@ void MatrixGL::drawPath(int points[], int pointsLen){
   }
 }
 
+void MatrixGL::drawPoint(int x, int y){
+  mx->setPoint(y, x, true);
+}
+
 void MatrixGL::setIntensity(int intensity){
   if(intensity>15){
     intensity = 15;
