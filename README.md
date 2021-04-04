@@ -2,6 +2,18 @@ An Arduino Microcontroller Library For LED Dot Matrix Displays
 
 Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 
+## Features
+Implemented:
+* Frame Based Animation
+* Line Drawing
+* Path Drawing
+
+Planned:
+* Arbitrary Shape Drawing (with fills)
+* Display Inversion
+* Scrolling & Draw Offsets
+* Text Support(?)
+
 Line drawing is preformed by a custom [digital differential analyzer (DDA)](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) implementation. 
 
 ## Setup
