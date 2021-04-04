@@ -51,7 +51,7 @@ void loop(){
 
 ## Notes & Caveats
 * This library uses zero based numbering to describe coordinates.
-* Unlike many graphics libraries, this uses does not start counting the Y axis from the top. So point 0,0 is the bottom left corner (as you would expect on a graphing calculator).
+* Unlike many graphics libraries, this one does not start counting the Y axis from the top. So point 0,0 is the bottom left corner (as you would expect on a graphing calculator).
 * (Almost) Nothing will stop you from trying to draw outside the bounds of your matrix. Sometimes this results in overflow and sometimes wrap-around. It's up to you to avoid this.
 
 ## Draw Point
