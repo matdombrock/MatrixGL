@@ -3,12 +3,8 @@
 #include <MD_MAX72xx.h>
 // Define hardware type, size, and output pins:
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
-//#define MAX_DEVICES 4
 #define CLK_PIN   13  // or SCK
 #define DATA_PIN  11  // or MOSI
-//#define CS_PIN    10  // or SS
-// Create a new instance of the MD_Parola class with hardware SPI connection:
-//MD_MAX72XX* mx = NULL;
 
 int dfOSX = 0;
 int dfOSY = 0;
@@ -94,13 +90,11 @@ void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
 }
 
 void MatrixGL::drawPath(int points[], int pointsLen){
-  // [0,0, 1,1, 2,2 ]
   for(int i =0; i<pointsLen; i+=2){
     if(i+2 < pointsLen){
       drawLine(points[i], points[i+1], points[i+2], points[i+3]);
     }
   }
-  //drawLine(0,0,8,8);
 }
 
 void MatrixGL::delayF(){
