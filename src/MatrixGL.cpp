@@ -112,6 +112,12 @@ void MatrixGL::delayF(){
   delay(_fDelay);
 }
 
+void MatrixGL::delayN(int n){
+  for(int i = 0; i<=n;i++){
+    delay(_fDelay);
+  }
+}
+
 void MatrixGL::clear(){
   mx->clear();
 }

@@ -139,11 +139,17 @@ void delayF();
 ```
 Used to delay from some time between drawing of frames or other items. The time delayed is based on the frame rate set with `setFrameRate()`.
 
+## Delay Frame (N)
+```c++
+void delayN(int n);
+```
+Used to delay for `n` frames. 
+
 ## Clear Display
 ```c++
 void clear();
 ```
-Removes everything from the display
+Removes everything from the display.
 
 ## Lock Display
 ```c++

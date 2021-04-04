@@ -18,6 +18,7 @@ class MatrixGL
     void setIntensity(int intensity);
     void setFrameRate(int fr);
     void delayF();
+    void delayN(int n);
     void clear();
     void lock();
     void unlock();
