@@ -8,10 +8,9 @@
 
 int dfOSX = 0;
 int dfOSY = 0;
-int FR = 50;
 bool inverted = false;
 
-MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY)
+MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int intensity)
 {
   lenX = lengthX;
   lenY = lengthY;
@@ -20,9 +19,13 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY)
   // Intialize the object:
   mx->begin();
   // Set the intensity (brightness) of the display (0-15):
-  mx->control(MD_MAX72XX::INTENSITY, 0);
+  if(intensity>15){
+    intensity = 15;
+  }
+  mx->control(MD_MAX72XX::INTENSITY, intensity);
   // Clear the display:
   mx->clear();
+  _fr = 50;
 }
 // Move over functions
 void MatrixGL::drawFrame(bool frame[], bool clearFirst){
@@ -98,7 +101,7 @@ void MatrixGL::drawPath(int points[], int pointsLen){
 }
 
 void MatrixGL::delayF(){
-  delay(FR);
+  delay(_fr);
 }
 
 void MatrixGL::clear(){

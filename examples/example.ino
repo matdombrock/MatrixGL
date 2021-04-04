@@ -4,8 +4,9 @@
 #define MAX_DEVICES 4
 #define LENGTHX 32
 #define LENGTHY 8
+#define INTENSITY 0
 
-MatrixGL matrix(CS_PIN,MAX_DEVICES,LENGTHX,LENGTHY);
+MatrixGL matrix(CS_PIN,MAX_DEVICES, LENGTHX, LENGTHY, INTENSITY);
 void setup() {
   // put your setup code here, to run once:
 }

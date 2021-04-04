@@ -26,8 +26,9 @@ Line drawing is preformed by a custom [digital differential analyzer (DDA)](http
 #define MAX_DEVICES 4 // How many matrix Blocks are connected?
 #define LENGTHX 32 // How many LEDs on the X axis?
 #define LENGTHY 8 // How many LEDs on the Y axis?
+#define INTENSITY 0 //LED Brightness 0-15
 
-MatrixGL matrix(CS_PIN,MAX_DEVICES,LENGTHX,LENGTHY);
+MatrixGL matrix(CS_PIN,MAX_DEVICES, LENGTHX, LENGTHY, INTENSITY);
 ```
 
 ## Basic Usage Example

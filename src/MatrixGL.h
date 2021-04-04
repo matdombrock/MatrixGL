@@ -11,7 +11,7 @@
 class MatrixGL
 {
   public:
-    MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY);
+    MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int intensity);
     int testF();
     void drawFrame(bool frame[], bool clearFirst);
     void drawLine(int x1, int y1, int x2, int y2);
@@ -24,7 +24,7 @@ class MatrixGL
     int lenY;
     MD_MAX72XX* mx;
   private:
-    
+    int _fr;
 };
 
 #endif
