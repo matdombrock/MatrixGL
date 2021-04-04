@@ -85,6 +85,7 @@ void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
     pos[1] = pos[1] + d[1];
     i = i + 1;
   }
+  mx->setPoint(y2, x2, true);// Set last point
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
