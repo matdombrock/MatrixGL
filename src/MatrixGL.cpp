@@ -12,8 +12,8 @@ bool inverted = false;
 
 MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES, int lengthX, int lengthY, int intensity)
 {
-  lenX = lengthX;
-  lenY = lengthY;
+  _lenX = lengthX;
+  _lenY = lengthY;
   
   mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
   // Intialize the object:
@@ -34,7 +34,7 @@ void MatrixGL::drawFrame(bool frame[], bool clearFirst){
     mx->clear();
   }
   int pos[2] = {dfOSX,dfOSY};//x,y
-  int frameLen = (lenX * lenY);
+  int frameLen = (_lenX * _lenY);
   // iterate through all pixels in frame
   for(int i = 0; i < frameLen; i++){
     // draw "pixel"
@@ -44,14 +44,14 @@ void MatrixGL::drawFrame(bool frame[], bool clearFirst){
     }
     if(pixel==1){
       //invert Y
-      mx->setPoint(lenY-1-pos[1], pos[0], true);
+      mx->setPoint(_lenY-1-pos[1], pos[0], true);
     }
     // change position
     pos[0]++;//x
-    if(pos[0]>lenX-1){
+    if(pos[0]>_lenX-1){
       pos[0] = 0;
       pos[1]++;//y
-      if(pos[1]>lenY-1){
+      if(pos[1]>_lenY-1){
         // done drawing frame
         mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
         return;
