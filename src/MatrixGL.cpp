@@ -59,8 +59,7 @@ void MatrixGL::drawFrame(bool frame[], bool clearFirst){
 }
 
 void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
-  //Digital differential analyzer
-  //https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)
+  // Digital differential analyzer
   // Doesn't handle offset yet
   float pos[2];//x,y
   float d[2];//x,y
