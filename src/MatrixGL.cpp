@@ -145,8 +145,6 @@ bool * findNum(int n){
   return findChar(nS[n]);
 }
 
-bool inverted = false;
-
 MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
 {
   _lenX = MAX_DEVICES * 8;
@@ -160,6 +158,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
   // Clear the display:
   mx->clear();
   _fDelay = 83;
+  _inverted = false;
 }
 
 void MatrixGL::drawPoint(int x, int y){
@@ -216,7 +215,7 @@ void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
   for(int i = 0; i < spriteLen; i++){
     // draw "pixel"
     bool pixel = pgm_read_byte_near(sprite + i);
-    if(inverted){
+    if(_inverted){
       pixel = !pixel;
     }
     if(pixel==1){
@@ -268,6 +267,10 @@ void MatrixGL::setIntensity(int intensity){
 
 void MatrixGL::setFrameRate(int fr){
   _fDelay = 1000/fr;
+}
+
+void MatrixGL::invertSprites(){
+  _inverted = !_inverted;
 }
 
 void MatrixGL::delayF(){

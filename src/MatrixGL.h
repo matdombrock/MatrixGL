@@ -21,6 +21,7 @@ class MatrixGL
     void drawNum(int n, int x, int y);
     void setIntensity(int intensity);
     void setFrameRate(int fr);
+    void invertSprites();
     void delayF();
     void delayN(int n);
     void clear();
@@ -33,6 +34,7 @@ class MatrixGL
     int _fDelay;
     int _lenX;
     int _lenY;
+    bool _inverted;
 };
 
 #endif
