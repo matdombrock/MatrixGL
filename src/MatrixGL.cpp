@@ -144,10 +144,7 @@ bool * findNum(int n){
   char nS [] = {'0','1','2','3','4','5','6','7','8','9'}; 
   return findChar(nS[n]);
 }
-//
 
-int dfOSX = 0;
-int dfOSY = 0;
 bool inverted = false;
 
 MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
@@ -245,7 +242,7 @@ void MatrixGL::drawFrame(bool frame[], bool clearFirst){
   if(clearFirst){
     mx->clear();
   }
-  int pos[2] = {dfOSX,dfOSY};//x,y
+  int pos[2] = {0,0};//x,y
   int frameLen = (_lenX * _lenY);
   drawSprite(frame, _lenX, _lenY, 0, 0);
 }
