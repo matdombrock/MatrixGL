@@ -7,17 +7,10 @@ Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 *Note: The `MD_MAX_72XX` library treats additional 8x8 matrices as adding to the Y axis. This library prefers treating them as the X axis. So the axes are inverted relative to the `MD_MAX_72XX` library.*
 
 ## Features
-Implemented:
 * Frame Based Animation
+* Sprite Drawing
 * Line Drawing
 * Path Drawing
-
-Planned:
-* Arbitrary Shape Drawing (with fills)
-* Display Inversion
-* Scrolling & Draw Offsets
-* Text Support(?)
-* Matrix State Queries
 
 Line drawing is preformed by a custom [digital differential analyzer (DDA)](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) implementation. 
 
@@ -56,13 +49,13 @@ void loop(){
 * Unlike many graphics libraries, this one does not start counting the Y axis from the top. So point 0,0 is the bottom left corner (as you would expect on a graphing calculator).
 * (Almost) Nothing will stop you from trying to draw outside the bounds of your matrix. Sometimes this results in overflow and sometimes wrap-around. It's up to you to avoid this.
 
-## Draw Point
+## Drawing Points
 ```c++
 void drawPoint(int x, int y);
 ```
 Turn on an LED at point x,y. 
 
-## Draw Line
+## Drawing Lines
 ```c++
 void drawLine(int x1, int y1, int x2, int y2);
 ```
@@ -73,7 +66,7 @@ Example:
 matrix.drawLine(0, 0, 6, 8);
 ```
 
-## Draw Path
+## Drawing Paths
 ```c++
 void drawPath(int points[], int pointsLen);
 ```
@@ -87,11 +80,60 @@ matrix.drawPath(points, 8);
 
 *Note: The length of the `points` array should always be an even number. This is not currently enforced.*
 
-## Animation Frames
+## Drawing Sprites
+```c++
+void drawSprite(bool sprite[],int w, int h, int x, int y);
+```
+Draw a sprite with width `w` and heigh `h` at the point `x,y`.
+
+* sprite - contains an array of boolean pixel values
+* w - The width (x length) of the sprite
+* h - The width (y length) of the sprite
+* x - The x drawing offset
+* y - The y drawing offset
+
+*Note: The x and y offsets position the bottom "left" pixel of the sprite.
+
+Example:
+```c++
+matrix.drawSprite(sprite1, 6,6, 0,0);
+```
+
+Defining a sprite works like this:
+```c++
+const bool sprite[] PROGMEM = {
+  0,0,1,1,0,0,
+  0,0,1,1,0,0,
+  1,1,1,1,1,1,
+  0,1,0,0,1,0,
+  0,1,1,1,1,0,
+  0,1,0,0,1,0
+};
+```
+You can more or less think of the sprite data as being a direct representation of the pixel matrix (assuming you lay it out in the same manner, which you don't have to). As you might have assumed, a 1 represents an active "pixel" (LED ON) and and a 0 represents an inactive "pixel" (LED OFF).
+
+Drawing a series of sprites (an animation) might look like:
+```c++
+matrix.clear();
+matrix.drawSprite(sprite1, 6,6, 1,1);
+matrix.delayF();
+matrix.clear();
+matrix.drawSprite(sprite2, 6,6, 1,1);
+matrix.delayF();
+matrix.clear();
+matrix.drawSprite(sprite3, 6,6, 1,1);
+matrix.delayF();
+```
+
+*Also notice that the array is being stored in program memory by the use of `PROGMEM` [More Info](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/). This is because sprite/frame data is much too large to store in RAM. While it would be technically possible to get away with storing a few frames/sprites of data in RAM, the `drawSprite()` method expects an array stored in program memory and will not work with an array stored in dynamic memory. Due to the fact that arrays MUST be stored in program memory, they are inherently immutable.*
+
+## Drawing Frames
 ```c++
 void drawFrame(bool frame[], bool clearFirst)
 ```
-* frame - contains an array of boolean pixel values
+Drawing a frame works in much the same way as drawing a sprite but we can assume that the frame will take up the entire display. Because of this we do not need to provide an x or y value and we also don't need to describe the width or height. 
+
+* frame - contains an array of boolean pixel values with a length equal to the area of your display (in "pixels")
 * clearFirst - should the previous display buffer be cleared before drawing?
 
 Defining a frame works like this:
@@ -122,7 +164,7 @@ matrix.drawFrame(frame3,true);
 matrix.delayF();
 ```
 
-You can more or less think of the frame data as being a direct representation of the pixel matrix (assuming you lay it out in the same manner). 
+Once again, you can think of the frame data as being a direct representation of the pixel matrix (assuming you lay it out in the same manner). 
 
 The first value represents the "pixel" 0,7 (This library uses zero-based counting). The second value represents pixel 1,7 and so on. The last value represents 32,0. 
 
@@ -130,9 +172,27 @@ While you do not have to write out your array to match the columns and rows of y
 
 So, if your display is 32x8 your array MUST have a length of 256. If your display is 8x8 your array MUST have length of 16.
 
-*Also notice that the array is being stored in program memory by the use of `PROGMEM` [More Info](https://www.arduino.cc/reference/en/language/variables/utilities/progmem/). This is because frame data is much too large to store in RAM. While it would be technically possible to get away with storing a few frames of data in RAM, the `drawFrame()` method expects an array stored in program memory and will not work with an array stored in dynamic memory. Due to the fact that arrays MUST be stored in program memory, they are inherently immutable.*
+## Drawing A Character
+```C++
+void drawChar(char c, int x, int y);
+```
+Currently has very minimal support and is not worth documenting.
 
-## Set LED Intensity (Brightness)
+## Drawing A Number
+```C++
+void drawNum(int n, int x, int y);
+```
+
+* n - number to draw (0->9);
+* x - X position to draw the number at
+* y - y position to draw the number at
+
+This works much like drawing a sprite.  Just provide a number between 0 and 9 and tell it where to draw at. 
+
+*Note: At this time all built-in number sprites are 3 "pixels" wide and 5 "pixels" high.*
+
+
+## Setting LED Intensity (Brightness)
 ```C++
 void setIntensity(int intensity);
 ```
@@ -141,32 +201,39 @@ The value of `intensity` should be 0 through 15.
 
 *Note: The default value is 0 (zero).*
 
-## Set Frame Rate
+## Inverting Sprites
+```c++
+void invertSprites();
+```
+
+Toggle the inversion of sprites. This affects frames, characters and numbers as well. 
+
+## Setting Frame Rate
 ```c++
 void setFrameRate(int fr);
 ```
 
 The argument given for `fr` is the frame rate in 'frames per second'. 
 
-## Delay Frame
+## Following A Frame Rate
 ```c++
 void delayF();
 ```
 Used to delay from some time between drawing of frames or other items. The time delayed is based on the frame rate set with `setFrameRate()`.
 
-## Delay Frame (N)
+## Delaying Several Frames
 ```c++
 void delayN(int n);
 ```
 Used to delay for `n` frames. 
 
-## Clear Display
+## Clearing The Display
 ```c++
 void clear();
 ```
 Removes everything from the display.
 
-## Lock Display
+## Locking The Display
 ```c++
 void lock();
 ```
@@ -191,21 +258,21 @@ void randomNoise(){
 ```
 Without using the `lock()` method, you will probably have issues with the display flickering. 
 
-## Unlock Display
+## Unlocking The Display
 ```c++
 void unlock();
 ```
 
 Unlock the display after locking it.
 
-## Get Display X Length
+## Getting Display X Length
 ```c++
 int lenX();
 ```
 
 Returns the X length of the display
 
-## Get Display Y Length
+## Getting Display Y Length
 ```c++
 int lenY();
 ```
