@@ -19,9 +19,9 @@ class MatrixGL
     void drawFrame(bool frame[], bool clearFirst);
     void drawChar(char c, int x, int y);
     void drawNum(int n, int x, int y);
+    void invertSprites();
     void setIntensity(int intensity);
     void setFrameRate(int fr);
-    void invertSprites();
     void delayF();
     void delayN(int n);
     void clear();

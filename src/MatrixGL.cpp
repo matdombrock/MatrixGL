@@ -265,12 +265,12 @@ void MatrixGL::setIntensity(int intensity){
   mx->control(MD_MAX72XX::INTENSITY, intensity);
 }
 
-void MatrixGL::setFrameRate(int fr){
-  _fDelay = 1000/fr;
-}
-
 void MatrixGL::invertSprites(){
   _inverted = !_inverted;
+}
+
+void MatrixGL::setFrameRate(int fr){
+  _fDelay = 1000/fr;
 }
 
 void MatrixGL::delayF(){
