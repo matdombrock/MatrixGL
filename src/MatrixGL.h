@@ -16,6 +16,9 @@ class MatrixGL
     void drawLine(int x1, int y1, int x2, int y2);
     void drawPath(int points[], int pointsLen);
     void drawFrame(bool frame[], bool clearFirst);
+    void drawSprite(bool sprite[],int w, int h, int x, int y);
+    void drawChar(char c, int x, int y);
+    void drawNum(int n, int x, int y);
     void setIntensity(int intensity);
     void setFrameRate(int fr);
     void delayF();

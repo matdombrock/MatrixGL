@@ -14,7 +14,7 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
 {
   _lenX = MAX_DEVICES * 8;
   _lenY = 8;
-  
+
   mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
   // Initialize the object:
   mx->begin();
@@ -24,38 +24,15 @@ MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
   mx->clear();
   _fDelay = 83;
 }
-// Move over functions
+
+
 void MatrixGL::drawFrame(bool frame[], bool clearFirst){
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
   if(clearFirst){
     mx->clear();
   }
   int pos[2] = {dfOSX,dfOSY};//x,y
   int frameLen = (_lenX * _lenY);
-  // iterate through all pixels in frame
-  for(int i = 0; i < frameLen; i++){
-    // draw "pixel"
-    bool pixel = pgm_read_byte_near(frame + i);
-    if(inverted){
-      pixel = !pixel;
-    }
-    if(pixel==1){
-      //invert Y
-      mx->setPoint(_lenY-1-pos[1], pos[0], true);
-    }
-    // change position
-    pos[0]++;//x
-    if(pos[0]>_lenX-1){
-      pos[0] = 0;
-      pos[1]++;//y
-      if(pos[1]>_lenY-1){
-        // done drawing frame
-        mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
-        return;
-      }
-    }
-  }
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+  drawSprite(frame, _lenX, _lenY, 0, 0);
 }
 
 void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
@@ -139,4 +116,188 @@ int MatrixGL::lenX(){
 }
 int MatrixGL::lenY(){
   return _lenY;
+}
+//
+
+const bool f0[] PROGMEM = {
+  1,1,1,
+  1,0,1,
+  1,0,1,
+  1,0,1,
+  1,1,1
+};
+
+const bool f1[] PROGMEM = {
+  0,1,1,
+  0,0,1,
+  0,0,1,
+  0,0,1,
+  0,0,1
+};
+
+const bool f2[] PROGMEM = {
+  1,1,1,
+  0,0,1,
+  0,1,1,
+  1,0,0,
+  1,1,1
+};
+
+const bool f3[] PROGMEM = {
+  1,1,1,
+  0,0,1,
+  0,1,1,
+  0,0,1,
+  1,1,1
+};
+
+const bool f4[] PROGMEM = {
+  1,0,1,
+  1,0,1,
+  1,1,1,
+  0,0,1,
+  0,0,1
+};
+
+const bool f5[] PROGMEM = {
+  1,1,1,
+  1,0,0,
+  1,1,1,
+  0,0,1,
+  1,1,1
+};
+
+const bool f6[] PROGMEM = {
+  1,1,1,
+  1,0,0,
+  1,1,1,
+  1,0,1,
+  1,1,1
+};
+
+const bool f7[] PROGMEM = {
+  1,1,1,
+  0,0,1,
+  0,0,1,
+  0,1,0,
+  0,1,0
+};
+
+const bool f8[] PROGMEM = {
+  1,1,1,
+  1,0,1,
+  1,1,1,
+  1,0,1,
+  1,1,1
+};
+
+const bool f9[] PROGMEM = {
+  1,1,1,
+  1,0,1,
+  1,1,1,
+  0,0,1,
+  0,0,1
+};
+
+const bool fCol[] PROGMEM = {
+  0,0,0,
+  0,1,0,
+  0,0,0,
+  0,1,0,
+  0,0,0
+};
+
+bool * findChar(char c){
+  switch(c){
+    case '0':
+      return f0;
+      break;
+    case '1':
+      return f1;
+      break;
+    case '2':
+      return f2;
+      break;
+    case '3':
+      return f3;
+      break;
+    case '4':
+      return f4;
+      break;
+    case '5':
+      return f5;
+      break;
+    case '6':
+      return f6;
+      break;
+    case '7':
+      return f7;
+      break;
+    case '8':
+      return f8;
+      break;
+    case '9':
+      return f9;
+      break;
+    case ':':
+      return fCol;
+      break;
+    default:
+      return f0;
+      break;
+  }
+}
+
+bool * findNum(int n){
+  // Abstraction of `findChar()` that allows an int as an argument
+  if(n>9){
+    n=0;
+  }
+  char nS [] = {'0','1','2','3','4','5','6','7','8','9'}; 
+  return findChar(nS[n]);
+}
+// Sprite should be a struct that golds length and width
+void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
+  // w=x h=y
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+  int lenX = w;
+  int lenY = h;
+  int pos[2] = {0,0};//x,y
+  int spriteLen = lenX * lenY;
+  // iterate through all pixels in frame
+  for(int i = 0; i < spriteLen; i++){
+    // draw "pixel"
+    bool pixel = pgm_read_byte_near(sprite + i);
+    if(inverted){
+      pixel = !pixel;
+    }
+    if(pixel==1){
+      //invert Y
+      drawPoint(pos[0]+x, lenY-1-pos[1]+y);
+    }
+    // change position
+    pos[0]++;//x
+    if(pos[0]>lenX-1){
+      pos[0] = 0;
+      pos[1]++;//y
+      if(pos[1]>(lenY)-1){
+        // done drawing frame
+        mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+        return;
+      }
+    }
+  }
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+}
+
+void MatrixGL::drawNum(int n, int x, int y){
+  bool *frame;
+  frame = findNum(n);
+  drawSprite(frame,3,5,x,y);
+}
+
+void MatrixGL::drawChar(char c, int x, int y){
+  bool *frame;
+  frame = findChar(c);
+  drawSprite(frame,3,5,x,y);
 }
