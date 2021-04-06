@@ -6,119 +6,7 @@
 #define CLK_PIN   13  // or SCK
 #define DATA_PIN  11  // or MOSI
 
-int dfOSX = 0;
-int dfOSY = 0;
-bool inverted = false;
-
-MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
-{
-  _lenX = MAX_DEVICES * 8;
-  _lenY = 8;
-
-  mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
-  // Initialize the object:
-  mx->begin();
-  // Set the intensity (brightness) of the display (0-15):
-  setIntensity(0);
-  // Clear the display:
-  mx->clear();
-  _fDelay = 83;
-}
-
-
-void MatrixGL::drawFrame(bool frame[], bool clearFirst){
-  if(clearFirst){
-    mx->clear();
-  }
-  int pos[2] = {dfOSX,dfOSY};//x,y
-  int frameLen = (_lenX * _lenY);
-  drawSprite(frame, _lenX, _lenY, 0, 0);
-}
-
-void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
-  // Digital differential analyzer
-  // Doesn't handle offset yet
-  float pos[2];//x,y
-  float d[2];//x,y
-  float step;
-  int i;
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
-  d[0] = (x2 - x1);
-  d[1] = (y2 - y1);
-  
-  if (abs(d[0]) >= abs(d[1]))
-    step = abs(d[0]);
-  else
-    step = abs(d[1]);
-  
-  d[0] = d[0] / step;
-  d[1] = d[1] / step;
-  pos[0] = x1;
-  pos[1] = y1;
-  i = 1;
-  while (i <= step) {
-    mx->setPoint(pos[1], pos[0], true);
-    pos[0] = pos[0] + d[0];
-    pos[1] = pos[1] + d[1];
-    i = i + 1;
-  }
-  mx->setPoint(y2, x2, true);// Set last point
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
-}
-
-void MatrixGL::drawPath(int points[], int pointsLen){
-  for(int i =0; i<pointsLen; i+=2){
-    if(i+2 < pointsLen){
-      drawLine(points[i], points[i+1], points[i+2], points[i+3]);
-    }
-  }
-}
-
-void MatrixGL::drawPoint(int x, int y){
-  mx->setPoint(y, x, true);
-}
-
-void MatrixGL::setIntensity(int intensity){
-  if(intensity>15){
-    intensity = 15;
-  }
-  mx->control(MD_MAX72XX::INTENSITY, intensity);
-}
-
-void MatrixGL::setFrameRate(int fr){
-  _fDelay = 1000/fr;
-}
-
-void MatrixGL::delayF(){
-  delay(_fDelay);
-}
-
-void MatrixGL::delayN(int n){
-  for(int i = 0; i<=n;i++){
-    delay(_fDelay);
-  }
-}
-
-void MatrixGL::clear(){
-  mx->clear();
-}
-
-void MatrixGL::unlock(){
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
-}
-
-void MatrixGL::lock(){
-  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
-}
-
-int MatrixGL::lenX(){
-  return _lenX;
-}
-int MatrixGL::lenY(){
-  return _lenY;
-}
-//
-
+// Built-in characters and methods to support looking them up
 const bool f0[] PROGMEM = {
   1,1,1,
   1,0,1,
@@ -256,7 +144,70 @@ bool * findNum(int n){
   char nS [] = {'0','1','2','3','4','5','6','7','8','9'}; 
   return findChar(nS[n]);
 }
-// Sprite should be a struct that golds length and width
+//
+
+int dfOSX = 0;
+int dfOSY = 0;
+bool inverted = false;
+
+MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
+{
+  _lenX = MAX_DEVICES * 8;
+  _lenY = 8;
+
+  mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
+  // Initialize the object:
+  mx->begin();
+  // Set the intensity (brightness) of the display (0-15):
+  setIntensity(0);
+  // Clear the display:
+  mx->clear();
+  _fDelay = 83;
+}
+
+void MatrixGL::drawPoint(int x, int y){
+  mx->setPoint(y, x, true);
+}
+
+void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
+  // Digital differential analyzer
+  // Doesn't handle offset yet
+  float pos[2];//x,y
+  float d[2];//x,y
+  float step;
+  int i;
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+  d[0] = (x2 - x1);
+  d[1] = (y2 - y1);
+  
+  if (abs(d[0]) >= abs(d[1]))
+    step = abs(d[0]);
+  else
+    step = abs(d[1]);
+  
+  d[0] = d[0] / step;
+  d[1] = d[1] / step;
+  pos[0] = x1;
+  pos[1] = y1;
+  i = 1;
+  while (i <= step) {
+    mx->setPoint(pos[1], pos[0], true);
+    pos[0] = pos[0] + d[0];
+    pos[1] = pos[1] + d[1];
+    i = i + 1;
+  }
+  mx->setPoint(y2, x2, true);// Set last point
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+}
+
+void MatrixGL::drawPath(int points[], int pointsLen){
+  for(int i =0; i<pointsLen; i+=2){
+    if(i+2 < pointsLen){
+      drawLine(points[i], points[i+1], points[i+2], points[i+3]);
+    }
+  }
+}
+
 void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
   // w=x h=y
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
@@ -290,10 +241,13 @@ void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
-void MatrixGL::drawNum(int n, int x, int y){
-  bool *frame;
-  frame = findNum(n);
-  drawSprite(frame,3,5,x,y);
+void MatrixGL::drawFrame(bool frame[], bool clearFirst){
+  if(clearFirst){
+    mx->clear();
+  }
+  int pos[2] = {dfOSX,dfOSY};//x,y
+  int frameLen = (_lenX * _lenY);
+  drawSprite(frame, _lenX, _lenY, 0, 0);
 }
 
 void MatrixGL::drawChar(char c, int x, int y){
@@ -301,3 +255,51 @@ void MatrixGL::drawChar(char c, int x, int y){
   frame = findChar(c);
   drawSprite(frame,3,5,x,y);
 }
+
+void MatrixGL::drawNum(int n, int x, int y){
+  bool *frame;
+  frame = findNum(n);
+  drawSprite(frame,3,5,x,y);
+}
+
+void MatrixGL::setIntensity(int intensity){
+  if(intensity>15){
+    intensity = 15;
+  }
+  mx->control(MD_MAX72XX::INTENSITY, intensity);
+}
+
+void MatrixGL::setFrameRate(int fr){
+  _fDelay = 1000/fr;
+}
+
+void MatrixGL::delayF(){
+  delay(_fDelay);
+}
+
+void MatrixGL::delayN(int n){
+  for(int i = 0; i<=n;i++){
+    delay(_fDelay);
+  }
+}
+
+void MatrixGL::clear(){
+  mx->clear();
+}
+
+void MatrixGL::lock(){
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+}
+
+void MatrixGL::unlock(){
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+}
+
+int MatrixGL::lenX(){
+  return _lenX;
+}
+int MatrixGL::lenY(){
+  return _lenY;
+}
+
+
