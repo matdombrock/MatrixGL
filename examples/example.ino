@@ -323,6 +323,33 @@ void demoDrawFrames(){
   matrix.delayN(5);
 }
 
+void demoInvertSprite(){
+  // Use the `invertSprites()` method to invert the display
+  matrix.drawSprite(sprite3, 6,6,1,1);
+  matrix.invertSprites();
+  matrix.delayN(2);
+  matrix.clear();
+  matrix.drawSprite(sprite3, 6,6,1,1);
+  matrix.delayN(2);
+  matrix.clear();
+}
+
+void demoInvertFrames(){
+  // Draw a 2 frame animation using the `drawFrame()` method.
+  // Use the `invertSprites()` method to invert the display in between draws
+  // These frames are designed for a 4 unit wide matrix (32x8)
+  // Frames at top of file
+  matrix.drawFrame(frame1, true);
+  matrix.delayN(5);
+  matrix.drawFrame(frame2, true);
+  matrix.delayN(5);
+  matrix.invertSprites();
+  matrix.drawFrame(frame1, true);
+  matrix.delayN(5);
+  matrix.drawFrame(frame2, true);
+  matrix.delayN(5);
+  matrix.invertSprites();
+}
 
 void loop() {
   /*
@@ -341,4 +368,6 @@ void loop() {
   //demoShockBoy();
   demoDrawCustomSprite();
   //demoDrawFrames();
+  //demoInvertSprite();
+  //demoInvertFrames();
 }
