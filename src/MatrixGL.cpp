@@ -3,8 +3,8 @@
 #include <MD_MAX72xx.h>
 // Define hardware type, size, and output pins:
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
-#define CLK_PIN   13  // or SCK
-#define DATA_PIN  11  // or MOSI
+//#define CLK_PIN   18  // or SCK//13
+//#define DATA_PIN  23  // or MOSI//11
 
 // Built-in characters and methods to support looking them up
 const bool f0[] PROGMEM = {
@@ -95,7 +95,7 @@ const bool fCol[] PROGMEM = {
   0,0,0
 };
 
-bool * findChar(char c){
+const bool * findChar(char c){
   switch(c){
     case '0':
       return f0;
@@ -136,7 +136,7 @@ bool * findChar(char c){
   }
 }
 
-bool * findNum(int n){
+const bool * findNum(int n){
   // Abstraction of `findChar()` that allows an int as an argument
   if(n>9){
     n=0;
@@ -145,7 +145,7 @@ bool * findNum(int n){
   return findChar(nS[n]);
 }
 
-MatrixGL::MatrixGL(int CS_PIN, int MAX_DEVICES)
+MatrixGL::MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES)
 {
   _lenX = MAX_DEVICES * 8;
   _lenY = 8;
@@ -204,7 +204,7 @@ void MatrixGL::drawPath(int points[], int pointsLen){
   }
 }
 
-void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
+void MatrixGL::drawSprite(const bool sprite[],int w, int h, int x, int y){
   // w=x h=y
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
   int lenX = w;
@@ -237,7 +237,7 @@ void MatrixGL::drawSprite(bool sprite[],int w, int h, int x, int y){
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
-void MatrixGL::drawFrame(bool frame[], bool clearFirst){
+void MatrixGL::drawFrame(const bool frame[], bool clearFirst){
   if(clearFirst){
     mx->clear();
   }
@@ -247,13 +247,13 @@ void MatrixGL::drawFrame(bool frame[], bool clearFirst){
 }
 
 void MatrixGL::drawChar(char c, int x, int y){
-  bool *frame;
+  const bool *frame;
   frame = findChar(c);
   drawSprite(frame,3,5,x,y);
 }
 
 void MatrixGL::drawNum(int n, int x, int y){
-  bool *frame;
+  const bool *frame;
   frame = findNum(n);
   drawSprite(frame,3,5,x,y);
 }

@@ -21,9 +21,11 @@ Line drawing is preformed by a custom [digital differential analyzer (DDA)](http
 #include <MatrixGL.h>
 
 #define CS_PIN 10 // The CS Pin for your device, may need changing
+#define CLK_PIN   18  // The SCK Pin for your device, may need changing
+#define DATA_PIN  23  // The MOSI Pin for your device, may need changing
 #define MAX_DEVICES 4 // How many matrix Blocks are connected?
 
-MatrixGL matrix(CS_PIN,MAX_DEVICES);
+MatrixGL matrix(CLK_PIN,DATA_PIN,CS_PIN,MAX_DEVICES);
 ```
 
 ## Basic Usage Example
