@@ -8,91 +8,354 @@
 
 // Built-in characters and methods to support looking them up
 const bool f0[] PROGMEM = {
-  1,1,1,
-  1,0,1,
-  1,0,1,
-  1,0,1,
-  1,1,1
+  0,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
 };
 
 const bool f1[] PROGMEM = {
-  0,1,1,
-  0,0,1,
-  0,0,1,
-  0,0,1,
-  0,0,1
+  0,1,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,1,1,1,
 };
 
 const bool f2[] PROGMEM = {
-  1,1,1,
-  0,0,1,
-  0,1,0,
-  1,0,0,
-  1,1,1
+  1,1,1,1,
+  0,0,0,1,
+  0,1,1,1,
+  1,0,0,0,
+  1,0,0,0,
+  1,1,1,1,
 };
 
 const bool f3[] PROGMEM = {
-  1,1,1,
-  0,0,1,
-  0,1,1,
-  0,0,1,
-  1,1,1
+  1,1,1,1,
+  0,0,0,1,
+  0,1,1,1,
+  0,0,0,1,
+  0,0,0,1,
+  1,1,1,1,
 };
 
 const bool f4[] PROGMEM = {
-  1,0,1,
-  1,0,1,
-  1,1,1,
-  0,0,1,
-  0,0,1
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+  0,0,0,1,
+  0,0,0,1,
 };
 
 const bool f5[] PROGMEM = {
-  1,1,1,
-  1,0,0,
-  1,1,1,
-  0,0,1,
-  1,1,1
+  1,1,1,1,
+  1,0,0,0,
+  1,1,1,0,
+  0,0,0,1,
+  0,0,0,1,
+  1,1,1,0,
 };
 
 const bool f6[] PROGMEM = {
-  1,1,1,
-  1,0,0,
-  1,1,1,
-  1,0,1,
-  1,1,1
+  1,1,1,1,
+  1,0,0,0,
+  1,1,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
 };
 
 const bool f7[] PROGMEM = {
-  1,1,1,
-  0,0,1,
-  0,0,1,
-  0,1,0,
-  0,1,0
+  1,1,1,1,
+  0,0,0,1,
+  0,0,1,1,
+  0,1,0,0,
+  0,1,0,0,
+  0,1,0,0,
 };
 
 const bool f8[] PROGMEM = {
-  1,1,1,
-  1,0,1,
-  1,1,1,
-  1,0,1,
-  1,1,1
+  0,1,1,0,
+  1,0,0,1,
+  0,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
 };
 
 const bool f9[] PROGMEM = {
-  1,1,1,
-  1,0,1,
-  1,1,1,
-  0,0,1,
-  0,0,1
+  1,1,1,1,
+  1,0,0,1,
+  1,1,1,1,
+  0,0,0,1,
+  0,0,0,1,
+  0,0,0,1,
 };
 
 const bool fCol[] PROGMEM = {
-  0,0,0,
-  0,1,0,
-  0,0,0,
-  0,1,0,
-  0,0,0
+  0,1,1,0,
+  0,1,1,0,
+  0,0,0,0,
+  0,0,0,0,
+  0,1,1,0,
+  0,1,1,0,
+};
+
+const bool fBLANK[] PROGMEM = {
+  0,0,0,0,
+  0,0,0,0,
+  0,0,0,0,
+  0,0,0,0,
+  0,0,0,0,
+  0,0,0,0,
+};
+
+const bool fNULL[] PROGMEM = {
+  1,0,1,0,
+  0,1,0,1,
+  1,0,1,0,
+  0,1,0,1,
+  1,0,1,0,
+  0,1,0,1,
+};
+
+const bool fA[] PROGMEM = {
+  0,1,1,0,
+  1,0,0,1,
+  1,1,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fB[] PROGMEM = {
+  1,1,1,0,
+  1,0,1,0,
+  1,1,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+};
+
+const bool fC[] PROGMEM = {
+  1,1,1,1,
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,1,1,1,
+};
+
+const bool fD[] PROGMEM = {
+  1,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,0,
+};
+
+const bool fE[] PROGMEM = {
+  1,1,1,1,
+  1,0,0,0,
+  1,1,1,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,1,1,1,
+};
+
+const bool fF[] PROGMEM = {
+  1,1,1,1,
+  1,0,0,0,
+  1,1,1,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+};
+
+const bool fG[] PROGMEM = {
+  1,1,1,1,
+  1,0,0,0,
+  1,0,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+};
+
+const bool fH[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fI[] PROGMEM = {
+  1,1,1,1,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  1,1,1,1,
+};
+
+const bool fJ[] PROGMEM = {
+  1,1,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  1,0,1,0,
+  0,1,1,0,
+};
+
+const bool fK[] PROGMEM = {
+  1,0,0,1,
+  1,0,1,0,
+  1,1,0,0,
+  1,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fL[] PROGMEM = {
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,1,1,1,
+};
+
+const bool fM[] PROGMEM = {
+  1,0,0,1,
+  1,1,1,1,
+  1,1,1,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fN[] PROGMEM = {
+  1,0,0,1,
+  1,1,0,1,
+  1,1,0,1,
+  1,0,1,1,
+  1,0,1,1,
+  1,0,0,1,
+};
+
+const bool fO[] PROGMEM = {
+  0,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+};
+
+const bool fP[] PROGMEM = {
+  1,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,0,
+  1,0,0,0,
+  1,0,0,0,
+};
+
+const bool fQ[] PROGMEM = {
+  0,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+  0,0,1,1,
+};
+
+const bool fR[] PROGMEM = {
+  1,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fS[] PROGMEM = {
+  0,1,1,1,
+  1,0,0,0,
+  0,1,1,0,
+  0,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+};
+
+const bool fT[] PROGMEM = {
+  1,1,1,1,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+  0,0,1,0,
+};
+
+const bool fU[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+};
+
+const bool fV[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+  0,1,1,0,
+};
+
+const bool fW[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+  1,1,1,1,
+  1,0,0,1,
+};
+
+const bool fX[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  0,1,1,0,
+  0,1,1,0,
+  1,0,0,1,
+  1,0,0,1,
+};
+
+const bool fY[] PROGMEM = {
+  1,0,0,1,
+  1,0,0,1,
+  1,1,1,1,
+  0,0,0,1,
+  0,0,0,1,
+  0,1,1,1,
+};
+
+const bool fZ[] PROGMEM = {
+  1,1,1,1,
+  0,0,0,1,
+  0,1,1,0,
+  1,0,0,0,
+  1,0,0,0,
+  1,1,1,1,
 };
 
 const bool * findChar(char c){
@@ -127,11 +390,95 @@ const bool * findChar(char c){
     case '9':
       return f9;
       break;
+
     case ':':
       return fCol;
       break;
+    case ' ':
+      return fBLANK;
+      break;
+
+    case 'A':
+      return fA;
+      break;
+    case 'B':
+      return fB;
+      break;
+    case 'C':
+      return fC;
+      break;
+    case 'D':
+      return fD;
+      break;
+    case 'E':
+      return fE;
+      break;
+    case 'F':
+      return fF;
+      break;
+    case 'G':
+      return fG;
+      break;
+    case 'H':
+      return fH;
+      break;
+    case 'I':
+      return fI;
+      break;
+    case 'J':
+      return fJ;
+      break;
+    case 'K':
+      return fK;
+      break;
+    case 'L':
+      return fL;
+      break;
+    case 'M':
+      return fM;
+      break;
+    case 'N':
+      return fN;
+      break;
+    case 'O':
+      return fO;
+      break;
+    case 'P':
+      return fP;
+      break;
+    case 'Q':
+      return fQ;
+      break;
+    case 'R':
+      return fR;
+      break;
+    case 'S':
+      return fS;
+      break;
+    case 'T':
+      return fT;
+      break;
+    case 'U':
+      return fU;
+      break;
+    case 'V':
+      return fV;
+      break;
+    case 'W':
+      return fW;
+      break;
+    case 'X':
+      return fX;
+      break;
+    case 'Y':
+      return fY;
+      break;
+    case 'Z':
+      return fZ;
+      break;
+
     default:
-      return f0;
+      return fNULL;
       break;
   }
 }
@@ -249,13 +596,13 @@ void MatrixGL::drawFrame(const bool frame[], bool clearFirst){
 void MatrixGL::drawChar(char c, int x, int y){
   const bool *frame;
   frame = findChar(c);
-  drawSprite(frame,3,5,x,y);
+  drawSprite(frame,4,6,x,y);
 }
 
 void MatrixGL::drawNum(int n, int x, int y){
   const bool *frame;
   frame = findNum(n);
-  drawSprite(frame,3,5,x,y);
+  drawSprite(frame,4,6,x,y);
 }
 
 void MatrixGL::setIntensity(int intensity){
