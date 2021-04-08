@@ -2,9 +2,23 @@
 
 *An Arduino Microcontroller Graphics Library For LED Dot Matrix Displays*
 
+---
+---
+
+## MD_MAX_72XX
+
 Depends on: [MD_MAX_72XX](https://github.com/MajicDesigns/MD_MAX72XX)
 
+The MD_MAX_72XX library provides a system for addressing the "pixels" on the matrix individually. 
+
+> The library implements functions that allow the MAX72xx to be used for LED matrices (64 individual LEDs), allowing the programmer to use the LED matrix as a pixel device, displaying graphics elements much like any other pixel addressable display.
+
+\- MAX72xx LED Matrix Display Library README
+
 *Note: The `MD_MAX_72XX` library treats additional 8x8 matrices as adding to the Y axis. This library prefers treating them as the X axis. So the axes are inverted relative to the `MD_MAX_72XX` library.*
+
+---
+---
 
 ## Features
 * Frame Based Animation
@@ -179,20 +193,38 @@ So, if your display is 32x8 your array MUST have a length of 256. If your displa
 ```C++
 void drawChar(char c, int x, int y);
 ```
-Currently has very minimal support and is not worth documenting.
+* c - Character to draw (A->Z)
+* x - X position to draw the number at
+* y - y position to draw the number at
+
+You can draw any capital (uppercase) letter between A and Z. You can also draw a colon. 
+
+Example:
+```c++
+drawChar('A', 1, 1);
+```
+
+Characters are 4 "pixels" wide so if you want to space them out appropriately you should but a horizontal space of at least 5 "pixels" between each character. 
+
+Example:
+```c++
+drawChar('A', 1, 1);
+drawChar('B', 6, 1);
+drawChar('C', 11, 1);
+```
 
 ## Drawing A Number
 ```C++
 void drawNum(int n, int x, int y);
 ```
 
-* n - number to draw (0->9);
+* n - Number to draw (0->9)
 * x - X position to draw the number at
 * y - y position to draw the number at
 
 This works much like drawing a sprite.  Just provide a number between 0 and 9 and tell it where to draw at. 
 
-*Note: At this time all built-in number sprites are 3 "pixels" wide and 5 "pixels" high.*
+*Note: At this time all built-in number sprites are 4 "pixels" wide and 6 "pixels" high.*
 
 
 ## Setting LED Intensity (Brightness)
