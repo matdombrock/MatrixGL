@@ -25,7 +25,7 @@ void MatrixGL::drawPoint(int x, int y, bool on){
   mx->setPoint(y, x, on);
 }
 
-void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
+void MatrixGL::drawLine(int x1, int y1, int x2, int y2, bool on){
   // Digital differential analyzer
   // Doesn't handle offset yet
   float pos[2];//x,y
@@ -52,19 +52,19 @@ void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
     pos[1] = pos[1] + d[1];
     i = i + 1;
   }
-  mx->setPoint(y2, x2, true);// Set last point
+  mx->setPoint(y2, x2, on);// Set last point
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
-void MatrixGL::drawPath(int points[], int pointsLen){
+void MatrixGL::drawPath(int points[], int pointsLen, bool on){
   for(int i =0; i<pointsLen; i+=2){
     if(i+2 < pointsLen){
-      drawLine(points[i], points[i+1], points[i+2], points[i+3]);
+      drawLine(points[i], points[i+1], points[i+2], points[i+3], on);
     }
   }
 }
 
-void MatrixGL::drawSprite(const bool sprite[],int w, int h, int x, int y){
+void MatrixGL::drawSprite(const bool sprite[],int w, int h, int x, int y, bool inverted){
   // w=x h=y
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
   int lenX = w;
@@ -75,12 +75,12 @@ void MatrixGL::drawSprite(const bool sprite[],int w, int h, int x, int y){
   for(int i = 0; i < spriteLen; i++){
     // draw "pixel"
     bool pixel = pgm_read_byte_near(sprite + i);
-    if(_inverted){
+    if(inverted){
       pixel = !pixel;
     }
     if(pixel==1){
       //invert Y
-      drawPoint(pos[0]+x, lenY-1-pos[1]+y);
+      drawPoint(pos[0]+x, lenY-1-pos[1]+y, true);
     }
     // change position
     pos[0]++;//x
@@ -97,25 +97,25 @@ void MatrixGL::drawSprite(const bool sprite[],int w, int h, int x, int y){
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
-void MatrixGL::drawFrame(const bool frame[], bool clearFirst){
+void MatrixGL::drawFrame(const bool frame[], bool clearFirst, bool inverted){
   if(clearFirst){
     mx->clear();
   }
   int pos[2] = {0,0};//x,y
   int frameLen = (_lenX * _lenY);
-  drawSprite(frame, _lenX, _lenY, 0, 0);
+  drawSprite(frame, _lenX, _lenY, 0, 0, inverted);
 }
 
-void MatrixGL::drawChar(char c, int x, int y){
+void MatrixGL::drawChar(char c, int x, int y, bool inverted){
   const bool *frame;
   frame = findChar(c);
-  drawSprite(frame,4,6,x,y);
+  drawSprite(frame,4,6,x,y, inverted);
 }
 
-void MatrixGL::drawNum(int n, int x, int y){
+void MatrixGL::drawNum(int n, int x, int y, bool inverted){
   const bool *frame;
   frame = findNum(n);
-  drawSprite(frame,4,6,x,y);
+  drawSprite(frame,4,6,x,y, inverted);
 }
 
 void MatrixGL::setIntensity(int intensity){
@@ -123,10 +123,6 @@ void MatrixGL::setIntensity(int intensity){
     intensity = 15;
   }
   mx->control(MD_MAX72XX::INTENSITY, intensity);
-}
-
-void MatrixGL::invertSprites(){
-  _inverted = !_inverted;
 }
 
 void MatrixGL::setFrameRate(int fr){
