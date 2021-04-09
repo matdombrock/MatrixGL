@@ -1,11 +1,21 @@
+/*
+ * Matrix VCC - MC 5v
+ * Matrix GND - MC GND
+ * Matrix DIN - MC Pin 11 or MOSI
+ * Matrix CS - MC Pin 10 or SS
+ * Matrix CLK - MC Pin 13 or SCK
+ */
+
 #include <MatrixGL.h>
 
-#define CS_PIN 10
+#define CLK_PIN   18  // or SCK//13
+#define DATA_PIN  23  // or MOSI//11
+#define CS_PIN 5 // or SS//10
 #define MAX_DEVICES 4
 #define LENGTHX 32
 #define LENGTHY 8
 
-MatrixGL matrix(CS_PIN,MAX_DEVICES);
+MatrixGL matrix(CLK_PIN,DATA_PIN,CS_PIN,MAX_DEVICES);
 
 // CUSTOM SPRITES
 const bool sprite[] PROGMEM = {
@@ -355,7 +365,7 @@ void loop() {
   /*
    * Uncomment the demo you want to try
    */
-  //demoLowLevel();
+  demoLowLevel();
   //demoPathRings();
   //demoLinesFill();
   //demoIntensity();
@@ -363,10 +373,10 @@ void loop() {
   //demoRandomLine();
   //demoRandomLines();
   //demoSnow();
-  //demoRandomNoise();
+  demoRandomNoise();
   //demoClock();
   //demoShockBoy();
-  demoDrawCustomSprite();
+  //demoDrawCustomSprite();
   //demoDrawFrames();
   //demoInvertSprite();
   //demoInvertFrames();
