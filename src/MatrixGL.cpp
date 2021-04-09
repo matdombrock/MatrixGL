@@ -21,8 +21,8 @@ MatrixGL::MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES)
   _inverted = false;
 }
 
-void MatrixGL::drawPoint(int x, int y){
-  mx->setPoint(y, x, true);
+void MatrixGL::drawPoint(int x, int y, bool on){
+  mx->setPoint(y, x, on);
 }
 
 void MatrixGL::drawLine(int x1, int y1, int x2, int y2){
