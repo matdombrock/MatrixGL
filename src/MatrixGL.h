@@ -12,11 +12,11 @@ class MatrixGL
 {
   public:
     MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES);
-    void drawPoint(int x, int y);
+    void drawPoint(int x, int y, bool on=true);
     void drawLine(int x1, int y1, int x2, int y2);
     void drawPath(int points[], int pointsLen);
     void drawSprite(const bool sprite[],int w, int h, int x, int y);
-    void drawFrame(const bool frame[], bool clearFirst);
+    void drawFrame(const bool frame[], bool clearFirst=true);
     void drawChar(char c, int x, int y);
     void drawNum(int n, int x, int y);
     void invertSprites();
