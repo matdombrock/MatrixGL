@@ -68,15 +68,19 @@ void loop(){
 
 ## Drawing Points
 ```c++
-void drawPoint(int x, int y);
+void drawPoint(int x, int y, bool on=true);
 ```
 Turn on an LED at point x,y. 
 
+Setting `on` to false will turn off the LED at that point.
+
 ## Drawing Lines
 ```c++
-void drawLine(int x1, int y1, int x2, int y2);
+void drawLine(int x1, int y1, int x2, int y2, bool on=true);
 ```
 Draw a line from the point `x1,y1` to the point `x2,y2`.
+
+Setting `on` to false will turn off the LEDs along the line.
 
 Example:
 ```c++
@@ -89,6 +93,8 @@ void drawPath(int points[], int pointsLen);
 ```
 Draw a path based on the given array of point coordinates. 
 
+Setting `on` to false will turn off the LEDs along the path.
+
 Example:
 ```c++
 int points[] = {0,0, 4,4, 7,6, 0,0};
@@ -99,7 +105,7 @@ matrix.drawPath(points, 8);
 
 ## Drawing Sprites
 ```c++
-void drawSprite(bool sprite[],int w, int h, int x, int y);
+void drawSprite(bool sprite[],int w, int h, int x, int y, inverted=false);
 ```
 Draw a sprite with width `w` and heigh `h` at the point `x,y`.
 
@@ -108,6 +114,7 @@ Draw a sprite with width `w` and heigh `h` at the point `x,y`.
 * h - The width (y length) of the sprite
 * x - The x drawing offset
 * y - The y drawing offset
+* inverted - Invert the "pixel values"
 
 *Note: The x and y offsets position the bottom "left" pixel of the sprite.
 
@@ -146,12 +153,13 @@ matrix.delayF();
 
 ## Drawing Frames
 ```c++
-void drawFrame(bool frame[], bool clearFirst)
+void drawFrame(bool frame[], bool clearFirst, bool inverted=false)
 ```
 Drawing a frame works in much the same way as drawing a sprite but we can assume that the frame will take up the entire display. Because of this we do not need to provide an x or y value and we also don't need to describe the width or height. 
 
 * frame - contains an array of boolean pixel values with a length equal to the area of your display (in "pixels")
 * clearFirst - should the previous display buffer be cleared before drawing?
+* inverted - Invert the "pixel values"
 
 Defining a frame works like this:
 ```c++
@@ -191,11 +199,12 @@ So, if your display is 32x8 your array MUST have a length of 256. If your displa
 
 ## Drawing A Character
 ```C++
-void drawChar(char c, int x, int y);
+void drawChar(char c, int x, int y, inverted=false);
 ```
 * c - Character to draw (A->Z)
 * x - X position to draw the number at
 * y - y position to draw the number at
+* inverted - Invert the "pixel values"
 
 You can draw any capital (uppercase) letter between A and Z. You can also draw a colon. 
 
@@ -215,12 +224,13 @@ drawChar('C', 11, 1);
 
 ## Drawing A Number
 ```C++
-void drawNum(int n, int x, int y);
+void drawNum(int n, int x, int y, inverted=false);
 ```
 
 * n - Number to draw (0->9)
 * x - X position to draw the number at
 * y - y position to draw the number at
+* inverted - Invert the "pixel values"
 
 This works much like drawing a sprite.  Just provide a number between 0 and 9 and tell it where to draw at. 
 
@@ -235,13 +245,6 @@ void setIntensity(int intensity);
 The value of `intensity` should be 0 through 15.
 
 *Note: The default value is 0 (zero).*
-
-## Inverting Sprites
-```c++
-void invertSprites();
-```
-
-Toggle the inversion of sprites. This affects frames, characters and numbers as well. 
 
 ## Setting Frame Rate
 ```c++
