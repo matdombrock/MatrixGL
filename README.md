@@ -89,7 +89,7 @@ matrix.drawLine(0, 0, 6, 8);
 
 ## Drawing Paths
 ```c++
-void drawPath(int points[], int pointsLen);
+void drawPath(int points[], int pointsLen, bool on=true);
 ```
 Draw a path based on the given array of point coordinates. 
 
