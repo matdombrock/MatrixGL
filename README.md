@@ -236,6 +236,14 @@ This works much like drawing a sprite.  Just provide a number between 0 and 9 an
 
 *Note: At this time all built-in number sprites are 4 "pixels" wide and 6 "pixels" high.*
 
+## Drawing A String
+```C++
+void drawString(String str, int length=6);
+```
+
+Draw a string on the display. The length can be greater than your actual string length.  
+
+*Note: At this time the string will be left justified. You can pad with spaces at the beginning if needed.*
 
 ## Setting LED Intensity (Brightness)
 ```C++

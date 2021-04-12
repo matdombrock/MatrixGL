@@ -118,6 +118,20 @@ void MatrixGL::drawNum(int n, int x, int y, bool inverted){
   drawSprite(frame,4,6,x,y, inverted);
 }
 
+void MatrixGL::drawString(String str, int length){
+  char buf[length];
+  str.toCharArray(buf, length+1);
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
+  mx->clear();
+  for(int i = 0; i<length; i++){
+    if(buf[i]==NULL){
+      buf[i] = ' ';
+    }
+    drawChar(buf[i],1+(i*5),1);  
+  }
+  mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
+}
+
 void MatrixGL::setIntensity(int intensity){
   if(intensity>15){
     intensity = 15;
