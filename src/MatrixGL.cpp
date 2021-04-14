@@ -47,7 +47,7 @@ void MatrixGL::drawLine(int x1, int y1, int x2, int y2, bool on){
   pos[1] = y1;
   i = 1;
   while (i <= step) {
-    mx->setPoint(pos[1], pos[0], true);
+    mx->setPoint(pos[1], pos[0], on);
     pos[0] = pos[0] + d[0];
     pos[1] = pos[1] + d[1];
     i = i + 1;
@@ -123,11 +123,18 @@ void MatrixGL::drawString(String str, int length){
   str.toCharArray(buf, length+1);
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::OFF);
   mx->clear();
+  //experimental
+  int extraSpace = (_lenX-2) - (length*5);// There is a default padding of 1
+  int padding = 1;
+  if(extraSpace>2){//extraSpace<=2 does not need custom padding
+    padding = extraSpace/2;
+  }
+  //
   for(int i = 0; i<length; i++){
     if(buf[i]==NULL){
       buf[i] = ' ';
     }
-    drawChar(buf[i],1+(i*5),1);  
+    drawChar(buf[i],padding+(i*5),1);//experimental: padding was 1  
   }
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
