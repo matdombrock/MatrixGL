@@ -11,7 +11,7 @@
 class MatrixGL
 {
   public:
-    MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES);
+    MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES=1, int MDX=NULL, int MDY=NULL);
     void drawPoint(int x, int y, bool on=true);
     void drawLine(int x1, int y1, int x2, int y2, bool on=true);
     void drawPath(int points[], int pointsLen, bool on=true);
@@ -34,6 +34,8 @@ class MatrixGL
     int _fDelay;
     int _lenX;
     int _lenY;
+    int _mdX;
+    int _mdY;
     bool _inverted;
 };
 

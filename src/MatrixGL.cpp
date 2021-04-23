@@ -5,11 +5,17 @@
 #include "findTools.h"
 #define HARDWARE_TYPE MD_MAX72XX::FC16_HW
 
-MatrixGL::MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES)
+MatrixGL::MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES, int MDX, int MDY)
 {
-  _lenX = MAX_DEVICES * 8;
-  _lenY = 8;
-
+  _mdX = MDX;
+  _mdY = MDY;
+  if(MDX == NULL || MDY == NULL){
+    _lenX = MAX_DEVICES * 8;
+    _lenY = 8;
+  }else{
+    _lenX = MDX * 8;
+    _lenY = MDY * 8;
+  }
   mx = new MD_MAX72XX(HARDWARE_TYPE, CS_PIN, MAX_DEVICES);
   // Initialize the object:
   mx->begin();
@@ -22,6 +28,14 @@ MatrixGL::MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES)
 }
 
 void MatrixGL::drawPoint(int x, int y, bool on){
+  // Offset for custom configurations
+  if(y>7 && _mdY > 1){
+    // We are over low level height (not by mistake)
+    // Move one _mdX to the right for each 8 pixels over 7
+    int offset = y/8;
+    x = x + ((_mdX*8)*offset);
+    y = y - (offset*8);
+  }
   mx->setPoint(y, x, on);
 }
 
@@ -47,12 +61,12 @@ void MatrixGL::drawLine(int x1, int y1, int x2, int y2, bool on){
   pos[1] = y1;
   i = 1;
   while (i <= step) {
-    mx->setPoint(pos[1], pos[0], on);
+    drawPoint(pos[0], pos[1], on);
     pos[0] = pos[0] + d[0];
     pos[1] = pos[1] + d[1];
     i = i + 1;
   }
-  mx->setPoint(y2, x2, on);// Set last point
+  drawPoint(x2, y2, on);// Set last point
   mx->control(MD_MAX72XX::UPDATE, MD_MAX72XX::ON);
 }
 
