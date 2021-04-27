@@ -29,7 +29,22 @@ The MD_MAX_72XX library provides a system for addressing the "pixels" on the mat
 
 Line drawing is preformed by a custom [digital differential analyzer (DDA)](https://en.wikipedia.org/wiki/Digital_differential_analyzer_(graphics_algorithm)) implementation. 
 
+## Used On
+
+### [jackmachiela/PhotoLife](https://github.com/jackmachiela/PhotoLife)
+
+> This project creates an old retro-looking photo-frame with a Conway's Game of Life simulation running in it. It's designed to hang on the wall, and to work continuously without stabilising. To prevent the simulation stabilising, the frankenstein switch can be thrown to spark new life into the display - zzzap!
+> 
+### [matdombrock/WiFi-Clock](https://github.com/matdombrock/WIFI-Clock)
+
+> A WIFI Clock + Temperature/Humidity System for ESP32 Dev Boards.
+> 
+> Displays on a 32x8 "pixel" LED Matrix.
+
 ## Setup
+```c++
+MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES=1, int MDX=NULL, int MDY=NULL);
+```
 
 ```c++
 #include <MatrixGL.h>
@@ -60,6 +75,28 @@ void loop(){
   matrix.unlock();// Unlock the display (not required)
 }
 ```
+
+## Matrix Arrangement
+
+By default, this library assumes that any additional matrices that you include will be added to the X axis. 
+
+If desired, you can add optional arguments (MDX & MDY) to the library instantiation that allow you to define the amount of displays on your X and Y axes.
+
+*Wiring Note: You will need to wire the matrices in order from bottom left (being the first) to top right (being the last).*
+
+Once you have it setup like that you can go ahead and start setting points that have a Y value over 7 and the library will automatically handle the addressing abstraction.
+
+So if you had a 2x2 display setup you could draw 2 points like:
+```c++
+matrix.drawPoint(0,0,true);
+matrix.drawPoint(15,15,true);
+```
+
+This will draw a point in the bottom left corner and another in the top right. The first point is drawn on the first display and the last point is drawn on last display in order of how they are wired.
+
+**NOTE: At this time, support for custom display configurations (additional matrices on the Y axis) is an experimental feature and may not play well with other features like sprite/character drawing. Please feel free to [post an issue](https://github.com/matdombrock/MatrixGL/issues/new/choose) if you encounter any.**
+
+See [the 4x2 example](https://github.com/matdombrock/MatrixGL/blob/master/examples/4x2.ino) for more info.
 
 ## Notes & Caveats
 * This library uses zero based numbering to describe coordinates.
