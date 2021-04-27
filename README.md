@@ -46,6 +46,8 @@ Line drawing is preformed by a custom [digital differential analyzer (DDA)](http
 MatrixGL(int CLK_PIN, int DATA_PIN, int CS_PIN, int MAX_DEVICES=1, int MDX=NULL, int MDY=NULL);
 ```
 
+Example:
+
 ```c++
 #include <MatrixGL.h>
 
